@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Deploy to Google Artifactory
-      uses: <seu-nome-de-usuário>/<seu-repositório>@v1
+      uses: castroneto/deploy-to-google-artifactory@v1
       with:
         credentials_json: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
         gcp_project: dev-castroneto
