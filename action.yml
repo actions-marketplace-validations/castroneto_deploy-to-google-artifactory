@@ -34,31 +34,14 @@ outputs:
 runs:
   using: 'docker'
   image: 'docker://gcr.io/cloud-builders/docker:latest'
-  steps:
-  - name: Checkout code
-    uses: actions/checkout@v2
-
-  - name: Authenticate with Google
-    uses: google-github-actions/auth@v1
-    with:
-      credentials_json: ${{ inputs.credentials_json }}
-
-  - name: Configure Docker to use Google Container Registry
-    run: |
-      echo "${{ inputs.credentials_json }}" | gcloud auth configure-docker ${{ inputs.gcp_registry }}
-  - name: Build Docker Image
-    run: |
-      docker build -t ${{ inputs.image_name }} .
-  - name: Tag Docker Image
-    run: |
-      docker tag ${{ inputs.image_name }} ${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
-  - name: Push Docker Image
-    id: push
-    run: |
-      docker push ${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
-    env:
-      DOCKER_BUILDKIT: '1'
-
-  - name: Set output
-    run: |
-      echo ::set-output name=image_uri::${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+  entrypoint: /bin/sh -c
+  command: |
+    apk add --no-cache curl jq
+    echo "${{ inputs.credentials_json }}" > /tmp/keyfile.json
+    gcloud auth activate-service-account --key-file=/tmp/keyfile.json
+    gcloud auth configure-docker ${{ inputs.gcp_registry }}
+    docker build -t ${{ inputs.image_name }} .
+    docker tag ${{ inputs.image_name }} ${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+    docker push ${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
+    IMAGE_URI=$(gcloud container images list-tags ${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }} --format='get(digest)')
+    echo ::set-output name=image_uri::${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }}@${IMAGE_URI}
