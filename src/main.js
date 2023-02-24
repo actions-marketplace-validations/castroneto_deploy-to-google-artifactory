@@ -3,6 +3,7 @@ const exec = require('@actions/exec');
 
 async function run() {
   try {
+    
     const credentialsJson = core.getInput('credentials_json');
     const gcpProject = core.getInput('gcp_project');
     const gcpRegistry = core.getInput('gcp_registry');
@@ -11,8 +12,9 @@ async function run() {
     const imageTag = core.getInput('image_tag');
 
     // Set up authentication
-    await exec.exec(`echo "${credentialsJson}" > /tmp/keyfile.json`);
-    await exec.exec(`gcloud auth activate-service-account --key-file=/tmp/keyfile.json`);
+    await exec.exec(`echo "${credentialsJson}" > keyfile.json`);
+    await exec.exec(`ls`);
+    await exec.exec(`gcloud auth activate-service-account --key-file=./keyfile.json`);
     await exec.exec(`gcloud auth configure-docker ${gcpRegistry}`);
 
     // Build and push the Docker image
