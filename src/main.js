@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
+const fs = require('fs');
 
 async function run() {
   try {
@@ -12,8 +13,10 @@ async function run() {
     const imageTag = core.getInput('image_tag');
 
     // Set up authentication
+    await exec.exec(`cd ${process.env.GITHUB_WORKSPACE}`); // Muda o diretório de trabalho
     await exec.exec(`echo "${credentialsJson}" > keyfile.json`);
-    await exec.exec(`ls`);
+
+    await fs.writeFileSync('keyfile.json', credentialsJson);
     await exec.exec(`gcloud auth activate-service-account --key-file=./keyfile.json`);
     await exec.exec(`gcloud auth configure-docker ${gcpRegistry}`);
 
