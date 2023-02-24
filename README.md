@@ -21,10 +21,10 @@ jobs:
       uses: castroneto/deploy-to-google-artifactory@v1
       with:
         credentials_json: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
-        gcp_project: dev-castroneto
-        gcp_registry: us-east4-docker.pkg.dev
-        gcp_repository: argus
-        image_name: email-consumer
+        gcp_project: my-project
+        gcp_registry: us-central1-docker.pkg.dev
+        gcp_repository: my-repo
+        image_name: my-image
         image_tag: latest
 ```
 

@@ -10,27 +10,21 @@ inputs:
   credentials_json:
     description: 'The JSON contents of the Google Cloud Service Account key file'
     required: true
-    default: '${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}'
   gcp_project:
     description: 'The name of the Google Cloud project'
     required: true
-    default: 'dev-castroneto'
   gcp_registry:
     description: 'The URL of the Google Container Registry'
     required: true
-    default: 'us-east4-docker.pkg.dev'
   gcp_repository:
     description: 'The name of the Google Container Registry repository'
     required: true
-    default: 'argus'
   image_name:
     description: 'The name of the Docker image'
     required: true
-    default: 'email-consumer'
   image_tag:
     description: 'The tag of the Docker image'
     required: true
-    default: 'latest'
 
 outputs:
   image_uri:
@@ -40,7 +34,6 @@ outputs:
 runs:
   using: 'docker'
   image: 'docker://gcr.io/cloud-builders/docker:latest'
-
   steps:
   - name: Checkout code
     uses: actions/checkout@v2
