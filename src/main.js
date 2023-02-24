@@ -13,11 +13,12 @@ async function run() {
     const imageTag = core.getInput('image_tag');
 
     // Set up authentication
-    await exec.exec(`echo "${credentialsJson}" > keyfile.json`);
+    // await exec.exec(`echo "${credentialsJson}" > keyfile.json`);
 
     await fs.writeFileSync('keyfile.json', credentialsJson);
     await exec.exec(`gcloud auth activate-service-account --key-file=./keyfile.json`);
     await exec.exec(`gcloud auth configure-docker --quiet ${gcpRegistry}`);
+    await fs.unlinkSync('keyfile.json');
 
     // Build and push the Docker image
     await exec.exec(`docker build -t ${imageName} .`);
@@ -25,18 +26,8 @@ async function run() {
     await exec.exec(`docker push ${gcpRegistry}/${gcpProject}/${gcpRepository}/${imageName}:${imageTag}`);
 
     // Get the URI of the Docker image in Google Container Registry
-    let imageUri = '';
-    const options = {
-      listeners: {
-        stdout: (data) => {
-          imageUri += data.toString();
-        },
-      },
-    };
-    await exec.exec(`gcloud container images list-tags ${gcpRegistry}/${gcpProject}/${gcpRepository}/${imageName} --format='get(digest)'`, [], options);
+    core.setOutput('image_uri', `${gcpRegistry}/${gcpProject}/${gcpRepository}/${imageName}@${imageTag}`);
 
-    // Set the output
-    core.setOutput('image_uri', `${gcpRegistry}/${gcpProject}/${gcpRepository}/${imageName}@${imageUri}`);
   } catch (error) {
     core.setFailed(error.message);
   }
