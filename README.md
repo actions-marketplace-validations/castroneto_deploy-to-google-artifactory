@@ -17,6 +17,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
     - name: Deploy to Google Artifactory
       uses: castroneto/deploy-to-google-artifactory@v1
       with:
