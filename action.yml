@@ -3,7 +3,7 @@ description: A GitHub Action that deploys a Docker image to Google Container Reg
 
 author: castroneto
 branding:
-  icon: docker
+  icon: archive
   color: blue
 
 inputs:
