@@ -17,7 +17,7 @@ async function run() {
 
     await fs.writeFileSync('keyfile.json', credentialsJson);
     await exec.exec(`gcloud auth activate-service-account --key-file=./keyfile.json`);
-    await exec.exec(`gcloud auth configure-docker ${gcpRegistry}`);
+    await exec.exec(`gcloud auth configure-docker --quiet ${gcpRegistry}`);
 
     // Build and push the Docker image
     await exec.exec(`docker build -t ${imageName} .`);
