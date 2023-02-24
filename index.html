@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GitHub Action - Deploy to Google Container Registry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="image" property="og:image"
+        content="https://raw.githubusercontent.com/castroneto/deploy-to-google-artifactory/main/image.png">
+    <meta property="og:title" content="GitHub Action - Deploy to Google Container Registry">
+    <meta property="og:description"
+        content="Esta action do GitHub permite automatizar o processo de deploy de imagens Docker no Google Container Registry. Com ela, você pode construir e implantar facilmente contêineres na infraestrutura da nuvem do Google Cloud Platform.">
+    <!-- Adicionando bootstrap CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            body {
+                font-family: "Times New Roman", Times, serif;
+                line-height: 1.5;
+                color: #333;
+            }
+    
+            h1 {
+                font-size: 2.5rem;
+                margin-top: 2rem;
+            }
+    
+            h2 {
+                font-size: 2rem;
+                margin-top: 1.5rem;
+            }
+    
+            p {
+                font-size: 1.2rem;
+                margin-top: 1rem;
+            }
+        </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Deploy to Google Container Registry</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.linkedin.com/in/castro-neto-a984bb1b1/">LinkedIn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/castroneto">GitHub</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Adicionando a imagem -->
+        <img src="https://raw.githubusercontent.com/castroneto/deploy-to-google-artifactory/main/image.png"
+        alt="Imagem do GitHub Action" width="500" height="500" class="img-fluid mt-6 mx-auto d-block">
+   
+        <h1>GitHub Action - Deploy to Google Container Registry</h1>
+        <p>Esta action do GitHub permite automatizar o processo de deploy de imagens Docker no Google Container
+            Registry. Com ela, você pode construir e implantar facilmente contêineres na infraestrutura da nuvem do
+            Google Cloud Platform.</p>
+        <h2>Como usar</h2>
+        <p>Para utilizar essa action em seu repositório do GitHub, você precisa criar um workflow que a invoque. Para
+            isso, crie um arquivo YAML na pasta <code>.github/workflows</code> do seu projeto com o seguinte conteúdo:
+        </p>
+        <pre><code>
+            name: Deploy Docker image to Google Container Registry
+            on:
+              push:
+                branches:
+                  - main
+            
+            jobs:
+              deploy:
+                runs-on: ubuntu-latest
+                steps:
+                - name: Checkout code
+                  uses: actions/checkout@v2
+                - name: Deploy to Google Artifactory
+                  uses: castroneto/deploy-to-google-artifactory@latest
+                  with:
+                    credentials_json: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
+                    gcp_project: my-project
+                    gcp_registry: us-central1-docker.pkg.dev
+                    gcp_repository: my-repo
+                    image_name: my-image
+                    image_tag: latest
+</code></pre>
+        <p>Certifique-se de substituir os valores dos campos credentials_json, gcp_project, gcp_registry,
+            gcp_repository, image_name e image_tag pelos valores correspondentes ao seu projeto.</p>
+            <p>Link Do Marketplace <a href="https://github.com/marketplace/actions/deploy-to-google-container-registry">https://github.com/marketplace/actions/deploy-to-google-container-registry</a></p>
+
+    </div>
+
+
+</body>
+
+</html>
