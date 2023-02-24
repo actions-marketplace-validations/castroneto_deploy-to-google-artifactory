@@ -1,4 +1,4 @@
-name: Deploy to Google Artifactory
+name: Deploy to Google Container Registry
 description: A GitHub Action that deploys a Docker image to Google Container Registry
 
 author: castroneto
@@ -32,16 +32,5 @@ outputs:
     value: ${{ steps.push.outputs.image_uri }}
 
 runs:
-  using: 'docker'
-  image: 'docker://gcr.io/cloud-builders/docker:latest'
-  entrypoint: /bin/sh -c
-  command: |
-    apk add --no-cache curl jq
-    echo "${{ inputs.credentials_json }}" > /tmp/keyfile.json
-    gcloud auth activate-service-account --key-file=/tmp/keyfile.json
-    gcloud auth configure-docker ${{ inputs.gcp_registry }}
-    docker build -t ${{ inputs.image_name }} .
-    docker tag ${{ inputs.image_name }} ${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
-    docker push ${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
-    IMAGE_URI=$(gcloud container images list-tags ${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }} --format='get(digest)')
-    echo ::set-output name=image_uri::${{ inputs.gcp_registry }}/${{ inputs.gcp_project }}/${{ inputs.gcp_repository }}/${{ inputs.image_name }}@${IMAGE_URI}
+  using: 'node12'
+  main: 'src/main.js'
