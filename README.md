@@ -20,7 +20,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Deploy to Google Artifactory
-      uses: castroneto/deploy-to-google-artifactory@v1
+      uses: castroneto/deploy-to-google-artifactory@latest
       with:
         credentials_json: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
         gcp_project: my-project
