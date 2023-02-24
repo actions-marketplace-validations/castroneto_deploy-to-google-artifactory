@@ -13,7 +13,6 @@ async function run() {
     const imageTag = core.getInput('image_tag');
 
     // Set up authentication
-    await exec.exec(`cd ${process.env.GITHUB_WORKSPACE}`); // Muda o diretório de trabalho
     await exec.exec(`echo "${credentialsJson}" > keyfile.json`);
 
     await fs.writeFileSync('keyfile.json', credentialsJson);
