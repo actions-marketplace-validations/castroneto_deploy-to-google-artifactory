@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://castroneto.github.io/deploy-to-google-artifactory
+Sitemap: https://castroneto.github.io/deploy-to-google-artifactory/sitemap.xml

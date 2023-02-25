@@ -1,52 +1,73 @@
 <!DOCTYPE html>
 <html>
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+
 <head>
+    <meta charset="UTF-8">
     <title>GitHub Action - Deploy to Google Container Registry</title>
+    <meta name="description"
+        content="Esta action do GitHub permite automatizar o processo de deploy de imagens Docker no Google Container Registry. Com ela, você pode construir e implantar facilmente contêineres na infraestrutura da nuvem do Google Cloud Platform.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="5ahL8I0pK7wnR6P6ixgt63KCFOckhbFoeXzYZpb52bs" />
-    <meta name="image" property="og:image"
-        content="https://raw.githubusercontent.com/castroneto/deploy-to-google-artifactory/main/image.png">
     <meta property="og:title" content="GitHub Action - Deploy to Google Container Registry">
     <meta property="og:description"
         content="Esta action do GitHub permite automatizar o processo de deploy de imagens Docker no Google Container Registry. Com ela, você pode construir e implantar facilmente contêineres na infraestrutura da nuvem do Google Cloud Platform.">
-    <!-- Adicionando bootstrap CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <style>
-            body {
-                font-family: "Times New Roman", Times, serif;
-                line-height: 1.5;
-                color: #333;
-            }
+    <meta property="og:image"
+        content="https://raw.githubusercontent.com/castroneto/deploy-to-google-artifactory/main/image.png">
+
+    <link rel="canonical" href="https://seusite.com/github-action-deploy-to-google-container-registry">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
-            h1 {
-                font-size: 2.5rem;
-                margin-top: 2rem;
-            }
     
-            h2 {
-                font-size: 2rem;
-                margin-top: 1.5rem;
-            }
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     
-            p {
-                font-size: 1.2rem;
-                margin-top: 1rem;
-            }
-        </style>
+    <!-- Inclua o arquivo CSS do highlight.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/default.min.css">
+    <!-- Inclua o arquivo JavaScript do highlight.js -->
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/lib/highlight.min.js"></script>
+    <!-- Inclua o arquivo JavaScript do highlight.js para a linguagem YAML -->
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/lib/languages/yaml.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/dracula.min.css">
+
+    <style>
+  
+
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+    </style>
+    <script>
+        // Inicializando o highlight.js
+        hljs.initHighlightingOnLoad();
+    </script>
 </head>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
         <a class="navbar-brand" href="#">Deploy to Google Container Registry</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="https://www.linkedin.com/in/castro-neto-a984bb1b1/">LinkedIn</a>
                 </li>
@@ -56,12 +77,13 @@
             </ul>
         </div>
     </nav>
-
+    
     <div class="container">
+
         <!-- Adicionando a imagem -->
         <img src="https://raw.githubusercontent.com/castroneto/deploy-to-google-artifactory/main/image.png"
-        alt="Imagem do GitHub Action" width="500" height="500" class="img-fluid mt-6 mx-auto d-block">
-   
+            alt="Imagem do GitHub Action" width="500" height="500" class="img-fluid mt-6 mx-auto d-block">
+    
         <h1>GitHub Action - Deploy to Google Container Registry</h1>
         <p>Esta action do GitHub permite automatizar o processo de deploy de imagens Docker no Google Container
             Registry. Com ela, você pode construir e implantar facilmente contêineres na infraestrutura da nuvem do
@@ -70,34 +92,63 @@
         <p>Para utilizar essa action em seu repositório do GitHub, você precisa criar um workflow que a invoque. Para
             isso, crie um arquivo YAML na pasta <code>.github/workflows</code> do seu projeto com o seguinte conteúdo:
         </p>
-        <pre><code>
-            name: Deploy Docker image to Google Container Registry
-            on:
-              push:
-                branches:
-                  - main
-            
-            jobs:
-              deploy:
-                runs-on: ubuntu-latest
-                steps:
-                - name: Checkout code
-                  uses: actions/checkout@v2
-                - name: Deploy to Google Artifactory
-                  uses: castroneto/deploy-to-google-artifactory@latest
-                  with:
-                    credentials_json: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
-                    gcp_project: my-project
-                    gcp_registry: us-central1-docker.pkg.dev
-                    gcp_repository: my-repo
-                    image_name: my-image
-                    image_tag: latest
-</code></pre>
+        <!-- Código com highlight.js -->
+        <pre><code class="hljs yaml">
+    name: Deploy Docker image to Google Container Registry
+    on:
+      push:
+        branches:
+          - main
+    
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Deploy to Google Artifactory
+          uses: castroneto/deploy-to-google-artifactory@latest
+          with:
+            credentials_json: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
+            gcp_project: my-project
+            gcp_registry: us-central1-docker.pkg.dev
+            gcp_repository: my-repo
+            image_name: my-image
+            image_tag: latest
+    </code></pre>
         <p>Certifique-se de substituir os valores dos campos credentials_json, gcp_project, gcp_registry,
             gcp_repository, image_name e image_tag pelos valores correspondentes ao seu projeto.</p>
-            <p>Link Do Marketplace <a href="https://github.com/marketplace/actions/deploy-to-google-container-registry">https://github.com/marketplace/actions/deploy-to-google-container-registry</a></p>
-
+        <p>Link Do Marketplace <a
+                href="https://github.com/marketplace/actions/deploy-to-google-container-registry">https://github.com/marketplace/actions/deploy-to-google-container-registry</a>
+        </p>
+        <!-- Adicionando informações extras -->
+        <h2>Passo a passo para configurar a autenticação</h2>
+        <ol>
+            <li>Acesse o Console do Google Cloud Platform e crie um novo projeto.</li>
+            <li>No menu lateral, clique em "IAM e admin" e depois em "Contas de serviço".</li>
+            <li>Crie uma nova conta de serviço e atribua as permissões necessárias para acessar o Google Container Registry.</li>
+            <li>Crie uma chave de autenticação em formato JSON para essa conta de serviço.</li>
+            <li>No seu repositório do GitHub, vá em "Settings" e depois em "Secrets".</li>
+            <li>Crie uma nova secret com o nome "JSON_GCLOUD_SERVICE_ACCOUNT_JSON" e copie o conteúdo da chave de autenticação JSON criada anteriormente.</li>
+        </ol>
+        <p>Com as credenciais configuradas, o próximo passo é criar um novo arquivo YAML na pasta .github/workflows do seu projeto com o conteúdo indicado acima.</p>
+    
     </div>
+    <footer>
+        <nav class="navbar navbar-expand-md navbar-light bg-light mt-5">
+          <div class="container">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.linkedin.com/in/castro-neto-a984bb1b1/">LinkedIn</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://github.com/castroneto">GitHub</a>
+              </li>
+            </ul>
+            <p class="ml-auto">Pix Key for Donations: 7e8dd554-abe0-4634-8de2-1fd0f771cc91</p>
+          </div>
+        </nav>
+      </footer>
 
 
 </body>
